@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Integración por partes</title>
+<script>window.MathJax={tex:{inlineMath:[['\\(','\\)']],displayMath:[['\\[','\\]']]}};</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-svg.js"></script>
+<style>
+:root{--bg:#fbf8f3;--fg:#1f2430;--muted:#5d6475;--card:#ffffff;--accent:#b4472b;--line:#e6dfd3;--hl:#fdeee8;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#16181d;--fg:#ecebe6;--muted:#a3a8b5;--card:#1f222a;--accent:#ff8a65;--line:#32363f;--hl:#2b2320;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#16181d;--fg:#ecebe6;--muted:#a3a8b5;--card:#1f222a;--accent:#ff8a65;--line:#32363f;--hl:#2b2320;color-scheme:dark}
+html{scroll-padding-top:70px;scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--fg);font:17px/1.65 Georgia,"Times New Roman",serif}
+nav{position:sticky;top:env(safe-area-inset-top,0px);background:var(--bg);border-bottom:1px solid var(--line);z-index:5;display:flex;gap:18px;padding:12px 20px;overflow-x:auto;font:14px system-ui,sans-serif}
+nav a{color:var(--muted);text-decoration:none;white-space:nowrap}nav a:hover{color:var(--accent)}
+header{max-width:820px;margin:0 auto;padding:56px 20px 24px}
+h1{font-size:clamp(2.2rem,6vw,3.4rem);line-height:1.1;margin:0 0 12px}
+header p{color:var(--muted);font-size:1.15rem;margin:0}
+main{max-width:820px;margin:0 auto;padding:0 20px 60px}
+section{margin-top:44px}
+h2{font-size:1.7rem;border-bottom:2px solid var(--accent);padding-bottom:6px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 20px;margin:16px 0;overflow-x:auto}
+.key{background:var(--hl);border-left:5px solid var(--accent);border-radius:6px;padding:12px 20px;margin:16px 0;overflow-x:auto}
+.tag{font:600 12px system-ui,sans-serif;letter-spacing:.08em;text-transform:uppercase;color:var(--accent)}
+table{border-collapse:collapse;width:100%;font:15px system-ui,sans-serif}
+td,th{border:1px solid var(--line);padding:8px 10px;text-align:left}
+details{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 16px;margin:10px 0;overflow-x:auto}
+summary{cursor:pointer;font-weight:bold}
+footer{text-align:center;color:var(--muted);font:14px system-ui,sans-serif;padding:30px 20px 50px;border-top:1px solid var(--line)}
+</style>
+</head>
+<body>
+<nav>
+<a href="#idea">La idea</a><a href="#formula">Fórmula</a><a href="#liate">Regla LIATE</a><a href="#ejemplos">Ejemplos</a><a href="#definida">Integral definida</a><a href="#errores">Errores</a><a href="#practica">Práctica</a>
+</nav>
+<header>
+<div class="tag">Cálculo integral</div>
+<h1>Integración por partes</h1>
+<p>Una técnica para integrar productos de funciones, nacida de la regla del producto para derivadas.</p>
+</header>
+<main>
+
+<section id="idea">
+<h2>1. ¿De dónde sale?</h2>
+<p>Partimos de la regla del producto para derivar dos funciones \(u(x)\) y \(v(x)\):</p>
+\[ \frac{d}{dx}\big(u\,v\big)=u'\,v+u\,v' \]
+<p>Integrando ambos lados y despejando \(\int u\,v'\,dx\), obtenemos la fórmula de integración por partes.</p>
+</section>
+
+<section id="formula">
+<h2>2. La fórmula</h2>
+<div class="key">
+\[ \int u\,dv \;=\; u\,v \;-\; \int v\,du \]
+</div>
+<p>Donde \(du=u'\,dx\) y \(dv=v'\,dx\). La idea es convertir una integral difícil en otra más sencilla.</p>
+<div class="card">
+<div class="tag">Procedimiento</div>
+<ol>
+<li>Elegir \(u\) y \(dv\) a partir del integrando.</li>
+<li>Calcular \(du\) (derivando \(u\)) y \(v\) (integrando \(dv\)).</li>
+<li>Aplicar \(uv-\int v\,du\).</li>
+<li>Resolver la nueva integral y añadir la constante \(C\).</li>
+</ol>
+</div>
+</section>
+
+<section id="liate">
+<h2>3. ¿Cómo elegir \(u\)? La regla LIATE</h2>
+<p>Se elige como \(u\) la función que aparezca primero en este orden (el resto será \(dv\)):</p>
+<table>
+<tr><th>Letra</th><th>Tipo</th><th>Ejemplo</th></tr>
+<tr><td><b>L</b></td><td>Logarítmicas</td><td>\(\ln x\)</td></tr>
+<tr><td><b>I</b></td><td>Inversas trigonométricas</td><td>\(\arctan x\)</td></tr>
+<tr><td><b>A</b></td><td>Algebraicas (polinomios)</td><td>\(x^2,\ x\)</td></tr>
+<tr><td><b>T</b></td><td>Trigonométricas</td><td>\(\sin x,\ \cos x\)</td></tr>
+<tr><td><b>E</b></td><td>Exponenciales</td><td>\(e^x\)</td></tr>
+</table>
+<p>Es una guía práctica, no una ley: funciona en la mayoría de los casos.</p>
+</section>
+
+<section id="ejemplos">
+<h2>4. Ejemplos resueltos</h2>
+
+<div class="card">
+<div class="tag">Ejemplo 1</div>
+\[ \int x\,e^x\,dx \]
+<p>Por LIATE: \(u=x\), \(dv=e^x dx\). Entonces \(du=dx\), \(v=e^x\).</p>
+\[ \int x e^x dx = x e^x-\int e^x dx = x e^x-e^x + C = e^x(x-1)+C \]
+</div>
+
+<div class="card">
+<div class="tag">Ejemplo 2 · el truco del "1"</div>
+\[ \int \ln x\,dx \]
+<p>Escribimos \(\ln x\cdot 1\): \(u=\ln x\), \(dv=dx\). Entonces \(du=\tfrac{1}{x}dx\), \(v=x\).</p>
+\[ \int \ln x\,dx = x\ln x-\int 1\,dx = x\ln x - x + C \]
+</div>
+
+<div class="card">
+<div class="tag">Ejemplo 3 · integral cíclica</div>
+\[ I=\int e^x\sin x\,dx \]
+<p>Primera vez: \(u=\sin x\), \(dv=e^x dx\):</p>
+\[ I=e^x\sin x-\int e^x\cos x\,dx \]
+<p>Segunda vez: \(u=\cos x\), \(dv=e^x dx\):</p>
+\[ \int e^x\cos x\,dx=e^x\cos x+\int e^x\sin x\,dx = e^x\cos x + I \]
+<p>Sustituyendo y despejando \(I\):</p>
+\[ I=e^x\sin x-e^x\cos x-I \;\Rightarrow\; I=\frac{e^x}{2}\big(\sin x-\cos x\big)+C \]
+</div>
+</section>
+
+<section id="definida">
+<h2>5. En integrales definidas</h2>
+<div class="key">
+\[ \int_a^b u\,dv=\Big[u\,v\Big]_a^b-\int_a^b v\,du \]
+</div>
+<p>Ejemplo: calcular \(\displaystyle\int_0^1 x e^x\,dx\).</p>
+\[ \Big[x e^x\Big]_0^1-\int_0^1 e^x dx = e-(e-1)=1 \]
+</section>
+
+<section id="errores">
+<h2>6. Errores comunes</h2>
+<ul>
+<li>Olvidar el signo negativo en \(-\int v\,du\).</li>
+<li>Elegir \(u\) y \(dv\) al revés: la nueva integral queda más difícil. Si pasa, intercámbialos.</li>
+<li>Olvidar la constante \(C\) en integrales indefinidas.</li>
+<li>No aplicar la fórmula las veces necesarias (por ejemplo, con \(x^2e^x\) se aplica dos veces).</li>
+</ul>
+</section>
+
+<section id="practica">
+<h2>7. Practica</h2>
+<p>Resuelve primero y luego revisa la respuesta.</p>
+<details><summary>a) \(\int x\cos x\,dx\)</summary>
+\[ x\sin x+\cos x+C \]</details>
+<details><summary>b) \(\int x^2 e^x\,dx\)</summary>
+\[ e^x\,(x^2-2x+2)+C \]</details>
+<details><summary>c) \(\int \arctan x\,dx\)</summary>
+\[ x\arctan x-\tfrac12\ln(1+x^2)+C \]</details>
+</section>
+
+</main>
+<footer>Página educativa sobre integración por partes · Cálculo integral</footer>
+</body>
+</html>
